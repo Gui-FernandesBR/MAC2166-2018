@@ -14,7 +14,7 @@
   ENTENDO QUE EPS SEM ASSINATURA NÃO SERÃO CORRIGIDOS E,
   AINDA ASSIM, PODERÃO SER PUNIDOS POR DESONESTIDADE ACADÊMICA.
 
-  Nome : Guilherme Fernandes Alves
+  Nome : Guilherme Fernandes Alves 
   NUSP : 10774361
   Turma: 04 - Engenharia Civil
   Prof.: André Fujita
@@ -24,8 +24,9 @@
 # **                 INÍCIO DA PARTE 1                    **
 # **********************************************************
 
+
 def calcula_id(matriz):
-    """ Retorna o valor de identificação de uma matriz computada pelo
+    """Retorna o valor de identificação de uma matriz computada pelo
     algoritmo adler32
 
     A função :func:'calcula_id' computa um identificador para uma matriz
@@ -59,26 +60,28 @@ def calcula_id(matriz):
     >>> calcula_id(matriz_D)
     2752528
 
-    .. seealso::
+    .. see also::
         Consulte o enunciado para um exemplo mais detalhado.
     """
     n_linhas = len(matriz)
-    n_colunas= len(matriz[0])
+    n_colunas = len(matriz[0])
     ### valores iniciais das somas que serao usadas para encontrar A e B ###
     soma_A = 1
     soma_B = n_linhas * n_colunas
     ### Agora vamos para a parte boa ###
-    k= n_linhas * n_colunas
-    for i in range (n_linhas):
+    k = n_linhas * n_colunas
+    for i in range(n_linhas):
         for j in range(n_colunas):
             soma_A += matriz[i][j]
             soma_B += k * matriz[i][j]
-            k=k-1
+            k = k - 1
     A = soma_A % 65521
-    B = soma_B % 65521  
+    B = soma_B % 65521
     ### Falta somente fazer o retorno ###
-    C = (B*(2**16))+A
+    C = (B * (2**16)) + A
     return C
+
+
 # ----------------------------------------------------------
 # --                  FIM DA PARTE 1                      --
 # ----------------------------------------------------------
@@ -87,17 +90,18 @@ def calcula_id(matriz):
 # **                 INÍCIO DA PARTE 2                    **
 # **********************************************************
 
+
 def carrega_identificador(nome_arquivo):
-    """ Carrega o identificador de uma imagem presente em um arquivo.
+    """Carrega o identificador de uma imagem presente em um arquivo.
 
     A função :func:'carrega_identificador' abre um arquivo de nome
     'nome_arquivo' presente na mesma pasta que o programa ep3.py, lê sua
-    primeira linha e retorna o inteiro representando o identificador  
+    primeira linha e retorna o inteiro representando o identificador
     presente nessa linha.
 
     :param nome_arquivo: String com o nome do arquivo com o identificador
     :type nome_arquivo: <class 'str'>
-    :return identificador: Inteiro contendo identificador 
+    :return identificador: Inteiro contendo identificador
     :rtype: <class 'int'>
 
     :Example:
@@ -105,7 +109,7 @@ def carrega_identificador(nome_arquivo):
     >>> identificador = carrega_identificador('img01.adler32')
     >>> print(identificador)
     297286
-    
+
 
     .. note::
         Embora pelas regras da disciplina você possa assumir que o arquivo
@@ -115,17 +119,18 @@ def carrega_identificador(nome_arquivo):
         Com relação ao identificador, você pode assumir que o arquivo contém
         um identificador válido na primeira linha.
     """
-    adler = open(nome_arquivo,'r')   ### aqui abrimos o arquivo .adler32 ###
+    adler = open(nome_arquivo, "r")  ### aqui abrimos o arquivo .adler32 ###
     ### Esse for serve para ler o arquivo aberto ###
     for linha in adler:
         b = linha.strip()
         code = int(b)
         break
-    adler.close()   ### agora fechamos o arquivo e retornamos o codigo ###
+    adler.close()  ### agora fechamos o arquivo e retornamos o codigo ###
     return code
 
+
 def carrega_imagem(nome_imagem):
-    """ Carrega do arquivo 'nome_imagem' uma imagem em formato PGM do tipo P2 e
+    """Carrega do arquivo 'nome_imagem' uma imagem em formato PGM do tipo P2 e
     retorna à imagem em formato de matriz de pixels.
 
     A função :func:'carrega_imagem' lê uma imagem em formato PGM do tipo P2
@@ -145,55 +150,56 @@ def carrega_imagem(nome_imagem):
     >>> print(A)
     [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15]]
 
-    .. seealso::
+    .. see also::
         Vide enunciado para uma explicação mais detalhada acerca do formato PGM
     .. note::
         Você pode assumir que a imagem está no formato correto e que o valor
         da intensidade de cada pixel é um inteiro entre 0 e 255 (inclusive).
     """
-    arquivo = open(nome_imagem,'r')       ### Apenas abre o arquivo ###
-    c = str('')   ### utilizei esse c para ir salvando as linhas do arquivo ###
+    arquivo = open(nome_imagem, "r")  ### Apenas abre o arquivo ###
+    c = str("")  ### utilizei esse c para ir salvando as linhas do arquivo ###
     for linha in arquivo:
         l = str(linha)
-        if len(l)>0:
-            c = c+l
-    arquivo.close()  
+        if len(l) > 0:
+            c = c + l
+    arquivo.close()
     ##################################################################
-    ### Presta atencao no truque pra tranformar a string em matriz ###
-    matriz = []     ### matriz que sera retornada ###
-    linha  = []      ### vai salvar uma linha da matriz ###
-    ch = ''         ### vai salvar um numero em formato de srting ###
+    ### Presta atencao no truque pra transformar a string em matriz ###
+    matriz = []  ### matriz que sera retornada ###
+    linha = []  ### vai salvar uma linha da matriz ###
+    ch = ""  ### vai salvar um numero em formato de string ###
     ##########################################################################
     ### soh precisamos pegar os caracteres da matriz, nao precisamos das    ##
-    ### especificacoes anteriores. Entao vamos procurar o indice onde comeca## 
-    ### a matriz dentro do arquivo e salva-lo em ->comeco                   ##
+    ### especificacoes anteriores. Entao vamos procurar o indice onde comeca##
+    ### a matriz dentro do arquivo e salva-lo em -> comeco                  ##
     i = 0
     ainda_nao = True
-    while i<len(c) and ainda_nao:
-        if c[i] == '2' and c[i+1]=='5' and c[i+2]=='5':
-            comeco = i+4
+    while i < len(c) and ainda_nao:
+        if c[i] == "2" and c[i + 1] == "5" and c[i + 2] == "5":
+            comeco = i + 4
             ### comeco eh o indice onde aparece o 1o elem para a matriz ###
             ainda_nao = False
-        i+=1
+        i += 1
     ### Eu optei por nao usar o break ###
     ### O proximo for vai servir para colocar os numeros dentro da matriz ###
-    for i in range(comeco,len(c)):
-        if c[i]=='\n':
-            if ch!='':
+    for i in range(comeco, len(c)):
+        if c[i] == "\n":
+            if ch != "":
                 linha.append(int(ch))
-                ch = ''
+                ch = ""
             matriz.append(linha)
-            linha=[]
-        elif c[i]== ' ' or c[i]=='' and ch!=' ':
-            linha.append(int(ch))   ### aqui convertemos as string para int ###
-            ch = ''
-        elif c[i]!=' ' and c[i]!='\n' and c[i]!='':
-            ch += c[i]      ### aqui eu usei a CONCATERNACAO
+            linha = []
+        elif c[i] == " " or c[i] == "" and ch != " ":
+            linha.append(int(ch))  ### aqui convertemos as string para int ###
+            ch = ""
+        elif c[i] != " " and c[i] != "\n" and c[i] != "":
+            ch += c[i]  ### aqui eu usei a CONCATENAÇÃO
     ### agora soh falta retornar a matriz ###
     return matriz
 
+
 def salva_imagem(nome_arquivo, matriz):
-    """ Cria (se não existir) e escreve a imagem representada pela matriz no
+    """Cria (se não existir) e escreve a imagem representada pela matriz no
     arquivo de nome nome_arquivo no formato PGM (tipo 2).
 
     A função :func:'salva_imagem' recebe uma matriz de inteiros (0-255)
@@ -216,26 +222,27 @@ def salva_imagem(nome_arquivo, matriz):
     [[255, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15]]
     >>> salva_imagem('nova_imagem.pgm', M)
 
-    .. seealso::
+    .. see also::
         Consulte o enunciado para informações específicas do formato PGM tipo 2
     """
-    portable_GrayMap = open(nome_arquivo,'w')   # abre ou cria o arquivo.pgm #
+    portable_GrayMap = open(nome_arquivo, "w")  # abre ou cria o arquivo.pgm #
     ### 1o escrevi o cabecalho ###
-    portable_GrayMap.write('P2\n')
+    portable_GrayMap.write("P2\n")
     m = len(matriz)
     n = len(matriz[0])
-    portable_GrayMap.write('%d %d\n'%(n, m))
-    portable_GrayMap.write('255\n')
+    portable_GrayMap.write("%d %d\n" % (n, m))
+    portable_GrayMap.write("255\n")
     ### Agora posso escrever os elementos da matriz ###
     for i in range(m):
         for j in range(n):
-            if matriz[i][j]!='':
-                if j!=(n-1):
-                    portable_GrayMap.write('%d '%(matriz[i][j]))
+            if matriz[i][j] != "":
+                if j != (n - 1):
+                    portable_GrayMap.write("%d " % (matriz[i][j]))
                 else:
-                    portable_GrayMap.write('%d'%(matriz[i][j]))
-        portable_GrayMap.write('\n')
-    portable_GrayMap.close()    # fecha o arquivo #
+                    portable_GrayMap.write("%d" % (matriz[i][j]))
+        portable_GrayMap.write("\n")
+    portable_GrayMap.close()  # fecha o arquivo #
+
 
 def carrega_transformações(nome_arquivo):
     """Carrega transformações de um arquivo de texto.
@@ -250,7 +257,7 @@ def carrega_transformações(nome_arquivo):
 
     Uma linha começando com # indica um comentário e deve ser ignorada.
     Todas as outras linhas representam matrizes 2-por-3 de modo que a matriz
-    inteira está representada em uma única linhado arquivo e cada elemento da
+    inteira está representada em uma única linha do arquivo e cada elemento da
     matriz é separado por um (ou mais) espaços.
     O exemplo abaixo mostra o conteúdo de um possível arquivo de transformações
 
@@ -275,61 +282,62 @@ def carrega_transformações(nome_arquivo):
     >>> print(transformações)
     [[[1, 0, -20], [0, 1, -20]], [[1, 0, 0], [0, 1, 0]]]
 
-    .. seealso::
+    .. see also::
         Veja o enunciado para maiores detalhes da estrutura desse arquivo.
     .. note::
         Você pode considerar que o arquivo de transformações só contém os
         três tipos de linhas mencionados (número total de transformações,
         comentários e transformações), você não precisa tratar outros formatos.
     """
-    abre = open(nome_arquivo,"r")
-    ### Foi aqui que eu usei o .read, fiz isso para ganhar tempo, mas eu ### 
+    abre = open(nome_arquivo, "r")
+    ### Foi aqui que eu usei o .read, fiz isso para ganhar tempo, mas eu ###
     ### provei que eu sei fazer do jeito dificil la na linha 168         ###
     b = abre.read()
     M = []
-    linha =[]
+    linha = []
     tam = len(b)
     for i in range(tam):
-        if b[i]=='\n':
+        if b[i] == "\n":
             M.append(linha)
             linha = []
         else:
             linha.append(b[i])
-            
-    num_tsf = int(M[0][0])   # variavel que salva o num de transformacoes #
-    A =[]   # 1o tem que tirar as linhas de comentario da matriz #
+
+    num_tsf = int(M[0][0])  # variavel que salva o num de transformações #
+    A = []  # 1o tem que tirar as linhas de comentario da matriz #
     tam = len(M)
-    for i in range(1,tam):
-        if M[i][0]!='#':
-            A.append(M[i])    
-    
-    B =[]   # Agora teremos que buscar a matriz sem espacos #
+    for i in range(1, tam):
+        if M[i][0] != "#":
+            A.append(M[i])
+
+    B = []  # Agora teremos que buscar a matriz sem espacos #
     tam = len(A)
     for i in range(tam):
-        lista =[]
-        numero=''
+        lista = []
+        numero = ""
         for j in range(len(A[i])):
-            if A[i][j]==' ' or A[i][j]=='':
+            if A[i][j] == " " or A[i][j] == "":
                 lista.append(int(numero))
-                numero = ''
+                numero = ""
             else:
                 numero += A[i][j]
         lista.append(int(numero))
         B.append(lista)
-        
-    matriz =[''] * num_tsf  ## UFA, finalmente a matriz final ##
+
+    matriz = [""] * num_tsf  ## UFA, finalmente a matriz final ##
     tam = len(matriz)
     for i in range(tam):
         fatia1 = []
         fatia2 = []
         for j in range(len(B[0])):
-            if j<3:
+            if j < 3:
                 fatia1.append(B[i][j])
             else:
                 fatia2.append(B[i][j])
-        matriz[i] = [fatia1,fatia2]
+        matriz[i] = [fatia1, fatia2]
     ### Agora eh soh retornar a matriz ###
     return matriz
+
 
 # ----------------------------------------------------------
 # --                  FIM DA PARTE 2                      --
@@ -339,8 +347,9 @@ def carrega_transformações(nome_arquivo):
 # **                 INÍCIO DA PARTE 3                    **
 # **********************************************************
 
+
 def transforma(matriz, transformação):
-    """ Devolve uma transformação geométrica linear da matriz.
+    """Devolve uma transformação geométrica linear da matriz.
 
     A função :func:'transforma' recebe uma matriz de pixels e uma transformação
     afim representada matricialmente e retorna a matriz transformada, **sem**
@@ -367,21 +376,21 @@ def transforma(matriz, transformação):
     >>> print(matriz2)
     [[6, 4, 5], [3, 1, 2]]
 
-    .. seealso::
+    .. see also::
         Vide enunciado para maiores exemplos da aplicação dessa transformação
 
     .. note::
         Você pode assumir que só serão utilizadas transformações inversíveis
         cujos coeficientes são inteiros.
     """
-    Tr = transformação    ## Usei o Tr pra diminuir o nome da variavel lista ##
-    n_linhas  = len(matriz)
+    Tr = transformação  ## Usei o Tr pra diminuir o nome da variavel lista ##
+    n_linhas = len(matriz)
     n_colunas = len(matriz[0])
-    matriz_transformada=[]  #matriz que sera retornada
+    matriz_transformada = []  # matriz que sera retornada
     for i in range(n_linhas):
-        linha=[]
+        linha = []
         for j in range(n_colunas):
-            linha.append('')
+            linha.append("")
         matriz_transformada.append(linha)
     ### Ate aqui soh criei a matriz com espacos vazios, agora vou preenche-la #
     for y in range(n_linhas):
@@ -391,9 +400,10 @@ def transforma(matriz, transformação):
             x_linha = sx % n_colunas
             y_linha = sy % n_linhas
             matriz_transformada[y_linha][x_linha] = matriz[y][x]
-    ### Os nomes das variaveis x e y podem confundir um ouco, mas estava assim
-    ### no enunciado
+    ### Os nomes das variaveis x e y podem confundir um pouco, mas já estava
+    ### assim no enunciado
     return matriz_transformada
+
 
 # ----------------------------------------------------------
 # --                  FIM DA PARTE 3                      --
@@ -403,8 +413,9 @@ def transforma(matriz, transformação):
 # **                 INÍCIO DA PARTE 4                    **
 # **********************************************************
 
+
 def busca(matriz, transformações, identificação, max_transfs):
-    """ Busca imagem com identificação dada usando no máximo um conjunto de
+    """Busca imagem com identificação dada usando no máximo um conjunto de
     max_transfs transformações.
 
     A função :func:'busca' recebe uma matriz representando uma imagem
@@ -447,7 +458,7 @@ def busca(matriz, transformações, identificação, max_transfs):
     >>> resultado2 = busca(nova2, transfs, identificador, 1)
     >>> print(resultado2)
     None
-    """ 
+    """
     ### Funcao igualzinha a do enunciado, pra nao dar problema ###
     if calcula_id(matriz) == identificação:
         return matriz
@@ -455,10 +466,11 @@ def busca(matriz, transformações, identificação, max_transfs):
         return None
     for T in transformações:
         N = transforma(matriz, T)
-        R = busca(N, transformações, identificação, max_transfs-1)
-        if R!= None:
+        R = busca(N, transformações, identificação, max_transfs - 1)
+        if R != None:
             return R
     return None
+
 
 # ----------------------------------------------------------
 # --                  FIM DA PARTE 4                      --
@@ -468,8 +480,9 @@ def busca(matriz, transformações, identificação, max_transfs):
 # **                 INÍCIO DA PARTE 5                    **
 # **********************************************************
 
+
 def main():
-    """ Aqui você deve implementar à interface de comunicação com o usuário
+    """Aqui você deve implementar à interface de comunicação com o usuário
 
     Sua interface deve (necessariamente nessa ordem):
         1. Escrever uma mensagem de identificação do autor e descrição do programa.
@@ -519,38 +532,51 @@ def main():
 
     Imagem com o identificador 870647247 salva em 'resultado01.pgm'!
 
-    .. seealso::
+    .. see also::
         Consulte o enunciado para mais exemplos.
     """
-    print('*****************************')
-    print('*** Programa desfaz vírus ***')
-    print('*****************************')
-    print('')
-    print('Autor: Guilherme Fernandes Alves')
-    print('NUSP: 10774361')
-    print("Vish, seus alunos te enviaram um virus que estraga imagens???")
+    print("*****************************")
+    print("*** Programa desfaz vírus ***")
+    print("*****************************")
+    print("")
+    print("Autor: Guilherme Fernandes Alves")
+    print("NUSP: 10774361")
+    print("Eita, seus alunos te enviaram um virus que estraga imagens???")
     print("NÃO SE PREOCUPE, vamos consertar o seu problema")
-    arq_img = input('Digite o nome do arquivo contendo a imagem transformada: ')
-    arq_code= input('Digite o nome do arquivo contendo o identificador da imagem original : ')
-    arq_tfsm= input('Digite o nome do arquivo contendo as transformações disponíveis : ')
-    img_orig= input('Digite o nome do arquivo onde a imagem original deve ser salva : ')
-    max_tran= int(input('Escolha o número máximo de transformações : '))
+    arq_img = input("Digite o nome do arquivo contendo a imagem transformada: ")
+    arq_code = input(
+        "Digite o nome do arquivo contendo o identificador da imagem original : "
+    )
+    arq_transformacao = input(
+        "Digite o nome do arquivo contendo as transformações disponíveis : "
+    )
+    img_orig = input(
+        "Digite o nome do arquivo onde a imagem original deve ser salva : "
+    )
+    max_tran = int(input("Escolha o número máximo de transformações : "))
     identificação = carrega_identificador(arq_code)
     matriz = carrega_imagem(arq_img)
-    transformações = carrega_transformações(arq_tfsm)
-    print('Tentando restaurar imagem',arq_img,'. . . ')
-    B = busca(matriz,transformações,identificação,max_tran)
+    transformações = carrega_transformações(arq_transformacao)
+    print("Tentando restaurar imagem", arq_img, ". . . ")
+    B = busca(matriz, transformações, identificação, max_tran)
     if B == None:
-        print('Não foi possível reconstruir uma imagem com o identificador %d utilizando uma sequência de no máximo %d transformações em'%(identificação, max_tran), arq_tfsm,'!')
-        salva_imagem(img_orig,B)
-        print('Mesmo assim, copiamos a sua imagem para', img_orig)
-        print('Você pode tentar aumentar o número máximo de transformações ou mudar o arquivo de transformações.')
+        print(
+            "Não foi possível reconstruir uma imagem com o identificador %d utilizando uma sequência de no máximo %d transformações em"
+            % (identificação, max_tran),
+            arq_transformacao,
+            "!",
+        )
+        salva_imagem(img_orig, B)
+        print("Mesmo assim, copiamos a sua imagem para", img_orig)
+        print(
+            "Você pode tentar aumentar o número máximo de transformações ou mudar o arquivo de transformações."
+        )
     else:
-        print('PRONTO!')
-        salva_imagem(img_orig,B)
-        print('Imagem com o identificador %d salva em'%(identificação),img_orig,'!')
-        
-        
+        print("PRONTO!")
+        salva_imagem(img_orig, B)
+        print("Imagem com o identificador %d salva em" % (identificação), img_orig, "!")
+
+
 # ----------------------------------------------------------
 # --                  FIM DA PARTE 5                      --
 # ----------------------------------------------------------
